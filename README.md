@@ -1,6 +1,7 @@
 # Tutorial: Choroplethmap_Youtuber earnings, by country (2023)
 
-![image](https://github.com/huddaluni/choroplethmap_Youtube2023/assets/117635800/bc18d8a4-e192-415b-9624-de1067c9dee6)
+![image](https://github.com/huddaluni/choroplethmap_Youtube2023/assets/117635800/9508834c-a706-46d4-89ef-0f40f5ac0803)
+
 
 
 
@@ -63,7 +64,7 @@ drive.mount("/content/drive")
 file_path = '/content/drive/MyDrive/Colab Notebooks/YT.csv'    
 
 #Load the CSV file into a DataFrame with the 'latin-1' encoding    
-yt_data = pd.read_csv(file_path, encoding='latin-1', usecols=['Youtuber', 'Country', 'highest_monthly_earnings', 'subscribers', 'Gross tertiary education enrollment (%)'])   
+yt_data = pd.read_csv(file_path, encoding='latin-1', usecols=['Youtuber', 'Country', 'highest_yearly_earnings', 'subscribers', 'Gross tertiary education enrollment (%)'])   
 
 #Display the first few rows of the DataFrame    
 yt_data     
@@ -107,13 +108,13 @@ cmap: Finally, when you type cmap and run the code, it will display or show you 
 Final line of code  
 -------------------------------------------------------------------------------  
 #Group by country and calculate total earnings
-country_earnings = yt_data.groupby('Country')['highest_monthly_earnings'].sum().reset_index()
+country_yr_earnings = yt_data.groupby('Country')['highest_yearly_earnings'].sum().reset_index()
 
 #Load a world map shapefile from geopandas without using deprecated dataset module
 world = gpd.read_file(gpd.datasets.get_path('naturalearth_lowres'))
 
 #Merge the total earnings data with the world map data based on 'Country' column
-merged_data = world.merge(country_earnings, left_on='name', right_on='Country')
+merged_data = world.merge(country_yr_earnings, left_on='name', right_on='Country')
 
 #Create a choropleth map based on total earnings with the new color palette
 fig, ax = plt.subplots(1, 1, figsize=(15, 10))
